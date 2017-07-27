@@ -1,0 +1,33 @@
+<div class="container">
+
+  <p style="color: red">{{ errorMessage }}</p>
+
+  <p>Howdy! Here's a list of awesome tasks to do (or not). Do you know any others? Add to the list yourself.</p>
+
+  <form (submit)="addName()">
+    <input [(ngModel)]="newName" name="newName" placeholder="Awesome Task's CRUD">
+    <button type="submit">Add</button>
+  </form>
+
+  <table class="table table-striped" style="margin-top: 1em">
+    <tbody>
+      <tr *ngFor="let item of names">
+        <td>{{ item.id }}</td>
+        <td (click)="edit(item.id)">
+          <span *ngIf="editId==item.id">
+            <input type="text" [(ngModel)]="editTask" (keydown.enter)="save()" (keydown.esc)="saveCancel()"/>
+            <button (click)="save()">Save</button>
+            <button (click)="saveCancel()">Cancel</button>
+          </span>
+          {{ item.task }}
+        </td>
+        <td>
+          <span (click)="done(item.id,!item.done)">
+            <span *ngIf="item.done" class="glyphicon glyphicon-ok" aria-hidden="true" style="color: green"></span>
+            <span *ngIf="!item.done" class="glyphicon glyphicon-pencil" aria-hidden="true" style="color: red"></span>
+          </span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
