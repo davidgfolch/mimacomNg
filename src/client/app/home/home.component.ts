@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
 import { NameListService, Task } from '../shared/name-list/name-list.service';
 
 /**
@@ -18,13 +18,15 @@ export class HomeComponent implements OnInit {
 
   editId: number;
   editTask: string;
+  //@ViewChild('editTaskInput')editTaskInput:ElementRef;
+
   /**
    * Creates an instance of the HomeComponent with the injected
    * NameListService.
    *
    * @param {NameListService} nameListService - The injected NameListService.
    */
-  constructor(public nameListService: NameListService) {}
+  constructor(public nameListService: NameListService, public ref: ChangeDetectorRef) {}
 
   /**
    * Get the names OnInit
@@ -76,8 +78,10 @@ export class HomeComponent implements OnInit {
   }
 
   saveCancel() {
-    this.editId=null;
+    this.ref.markForCheck();
+    this.editId=-1;
     this.editTask="";
+    return false;
   }
 
 
